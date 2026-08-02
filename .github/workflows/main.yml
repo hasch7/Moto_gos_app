@@ -19,7 +19,7 @@ jobs:
           channel: 'stable'
 
       - name: Generate iOS project files
-        run: flutter create . --platforms=ios --org com.example
+        run: flutter create . --platforms=ios --org com.example --project-name moto_gps_app --force
 
       - name: Inject iOS permissions (Info.plist)
         run: |
