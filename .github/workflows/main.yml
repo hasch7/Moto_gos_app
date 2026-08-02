@@ -1,4 +1,4 @@
-name: Build Moto GPS iOS App
+name: build moto gps ios app
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
           channel: 'stable'
 
       - name: Generate iOS project files
-        run: flutter create . --platforms=ios --org com.example --project-name moto_gps_app --force
+        run: flutter create --project-name moto_gps_app --platforms ios --force .
 
       - name: Inject iOS permissions (Info.plist)
         run: |
