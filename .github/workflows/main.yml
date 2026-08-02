@@ -38,7 +38,7 @@ jobs:
             <key>CFBundleExecutable</key>
             <string>$(EXECUTABLE_NAME)</string>
             <key>CFBundleIdentifier</key>
-            <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+            <string>com.example.motogpsapp</string>
             <key>CFBundleInfoDictionaryVersion</key>
             <string>6.0</string>
             <key>CFBundleName</key>
@@ -46,11 +46,13 @@ jobs:
             <key>CFBundlePackageType</key>
             <string>APPL</string>
             <key>CFBundleShortVersionString</key>
-            <string>$(FLUTTER_BUILD_NAME)</string>
+            <string>1.0.0</string>
             <key>CFBundleSignature</key>
             <string>????</string>
             <key>CFBundleVersion</key>
-            <string>$(FLUTTER_BUILD_NUMBER)</string>
+            <string>1</string>
+            <key>LSRequiresIPhoneOS</key>
+            <true/>
 
             <key>NSLocationWhenInUseUsageDescription</key>
             <string>Aplicația are nevoie de acces la GPS pentru a înregistra traseul moto.</string>
@@ -81,8 +83,14 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Install CocoaPods & Set iOS Deployment Target
+        run: |
+          cd ios
+          echo "platform :ios, '13.0'" > Podfile
+          pod install --repo-update
+
       - name: Build iOS App (Unsigned)
-        run: flutter build ios --release --no-codesign
+        run: flutter build ios --release --no-codesign CODE_SIGNING_ALLOWED=NO CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 
       - name: Compress iOS Payload
         run: |
