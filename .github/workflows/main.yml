@@ -83,14 +83,8 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Install CocoaPods & Set iOS Deployment Target
-        run: |
-          cd ios
-          echo "platform :ios, '13.0'" > Podfile
-          pod install --repo-update
-
       - name: Build iOS App (Unsigned)
-        run: flutter build ios --release --no-codesign CODE_SIGNING_ALLOWED=NO CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+        run: flutter build ios --release --no-codesign
 
       - name: Compress iOS Payload
         run: |
