@@ -83,13 +83,14 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build iOS App (Unsigned)
-        run: flutter build ios --release --no-codesign
-
-      - name: Compress iOS Payload
+      - name: Build iOS App (Unsigned IPA)
         run: |
-          mkdir -p Payload
-          mv build/ios/iphoneos/Runner.app Payload/
+          flutter build ios --release --no-codesign
+          cd ios
+          xcodebuild -workspace Runner.xcworkspace -scheme Runner -configuration Release -sdk iphoneos CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" -derivedDataPath ../build/derivedData
+          mkdir -p ../Payload
+          cp -r ../build/derivedData/Build/Products/Release-iphoneos/Runner.app ../Payload/
+          cd ..
           zip -r MotoGpsApp.ipa Payload
 
       - name: Upload IPA Artifact
