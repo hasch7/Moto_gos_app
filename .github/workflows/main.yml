@@ -19,7 +19,10 @@ jobs:
           channel: 'stable'
 
       - name: Generate iOS project files
-        run: flutter create --project-name moto_gps_app --platforms ios --force .
+        run: |
+          flutter create --platforms=ios temp_app
+          cp -r temp_app/ios .
+          rm -rf temp_app
 
       - name: Inject iOS permissions (Info.plist)
         run: |
